@@ -74,40 +74,40 @@ func _on_texture_button_linda_selected() -> void:
 
 
 func _on_texture_button_gobbos_selected() -> void:
-	_characterSelectedMessage("12 [color=Darkorange]Gobbos of the Deep Dark[/color]")
+	_characterSelectedMessage("6 [color=Darkorange]Gobbos of the Deep Dark[/color]")
 	_addId(8)
 
 
 func _on_texture_button_grumkins_selected() -> void:
-	_characterSelectedMessage("12 [color=Greenyellow]Grumkins[/color]")
+	_characterSelectedMessage("6 [color=Greenyellow]Grumkins[/color]")
 	_addId(9)
 
 
 func _on_texture_button_strangler_figs_selected() -> void:
-	_characterSelectedMessage("12 [color=Chartreuse]Strangler Figs[/color]")
+	_characterSelectedMessage("6 [color=Chartreuse]Strangler Figs[/color]")
 	_addId(10)
 
 
 func _on_texture_button_pepperion_pigs_selected() -> void:
-	_characterSelectedMessage("20 [color=pink]Pepperion Pigs[/color]")
+	_characterSelectedMessage("10 [color=pink]Pepperion Pigs[/color]")
 	_addId(11)
 
 
 func _on_texture_button_3_ghosts_selected() -> void:
-	_characterSelectedMessage("6 [color=Thistle]Spooky Ghosts[/color]")
+	_characterSelectedMessage("3 [color=Thistle]Spooky Ghosts[/color]")
 	_addId(12)
 
 
 func _on_texture_button_3_snakes_selected() -> void:
-	_characterSelectedMessage("The 14 [color=Lawngreen]Snakes[/color]")
+	_characterSelectedMessage("The 7 [color=Lawngreen]Snakes[/color]")
 	_addId(13)
 
 
 func _on_texture_button_3_lost_medics_selected() -> void:
-	_characterSelectedMessage("6 [color=Brown]Lost Medics[/color]")
+	_characterSelectedMessage("3 [color=Brown]Lost Medics[/color]")
 	_addId(14)
 
 
 func _on_texture_button_friend_selected() -> void:
-	_characterSelectedMessage("4 [color=Crimson]????[/color]")
+	_characterSelectedMessage("2 [color=Crimson]????[/color]")
 	_addId(15)

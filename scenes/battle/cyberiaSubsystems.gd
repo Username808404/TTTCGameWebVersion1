@@ -207,7 +207,7 @@ func _aStormofSwords(ally,enemyList):
 			if randi_range(0,ally._getSpeed())>randi_range(0,target._getDodge()) and target._getHealth()>0:
 				var damage
 				var tav
-				if ally._getActions()==ally._getMaxActions() and randi_range(0,3)==1:
+				if ally._getActions()==ally._getMaxActions() and randi_range(0,5)==1:
 					if ally._getRange()>1:
 						if randi_range(0,1)==1:
 							tav=preload("res://scenes/characterList/arrow.tscn")
@@ -377,17 +377,17 @@ func _loadCharacters():
 			challenger1Items=global.team3Items
 	var selectedCount=0
 	for i2 in challenger0:
-		var unitCount=1*2
+		var unitCount=1
 		if (i2>=8 and i2<=10):
-			unitCount=6*2
+			unitCount=6
 		if (i2==13):
-			unitCount=7*2
+			unitCount=7
 		if (i2==11):
-			unitCount=10*2
+			unitCount=10
 		if (i2==12 or i2==14):
-			unitCount=3*2
+			unitCount=3
 		if (i2==15):
-			unitCount=2*2
+			unitCount=2
 		for x2 in range(unitCount):
 			countLeft.append(i2)
 			countItemsLeft.append(challenger0Items[selectedCount])
@@ -395,17 +395,17 @@ func _loadCharacters():
 			
 	selectedCount=0
 	for i2 in challenger1:
-		var unitCount=1*2
+		var unitCount=1
 		if (i2>=8 and i2<=10):
-			unitCount=6*2
+			unitCount=6
 		if (i2==13):
-			unitCount=7*2
+			unitCount=7
 		if (i2==11):
-			unitCount=10*2
+			unitCount=10
 		if (i2==12 or i2==14):
-			unitCount=3*2
+			unitCount=3
 		if (i2==15):
-			unitCount=2*2
+			unitCount=2
 		for x2 in range(unitCount):
 			countRight.append(i2)
 			countItemsRight.append(challenger1Items[selectedCount])
@@ -481,12 +481,12 @@ func _on_tuturu() -> void:
 	var maxRightHealth=0
 	for leftCharacter in left:
 		leftCharacter.z_index=1
-		leftCharacter._setMaxHealth(leftCharacter._getMaxHealth()+(leftCharacter._getMaxHealth()/(leftCharacter._getCount())))
+		leftCharacter._setMaxHealth(leftCharacter._getMaxHealth()+(2*leftCharacter._getMaxHealth()/(leftCharacter._getCount())))
 		leftCharacter._setHealth(leftCharacter._getMaxHealth())
 		maxLeftHealth+=leftCharacter._getMaxHealth()
 	for rightCharacter in right:
 		rightCharacter.z_index=1
-		rightCharacter._setMaxHealth(rightCharacter._getMaxHealth()+(rightCharacter._getMaxHealth()/(rightCharacter._getCount())))
+		rightCharacter._setMaxHealth(rightCharacter._getMaxHealth()+(2*rightCharacter._getMaxHealth()/(rightCharacter._getCount())))
 		rightCharacter._setHealth(rightCharacter._getMaxHealth())
 		maxRightHealth+=rightCharacter._getMaxHealth() 
 	get_node("team1Bar").max_value=maxLeftHealth
@@ -501,10 +501,10 @@ func _on_win_button_pressed() -> void:
 	_returnal()
 
 func _causalInterference(): #this is where I rig the dice
-	if interferenceCount<5:
+	if interferenceCount<6:
 		if get_node("team1Bar").value/get_node("team1Bar").max_value > 1.5*(get_node("team2Bar").value/get_node("team2Bar").max_value):
 			for character in right:
-				if randi_range(1,2)==1:
+				if randi_range(1,3)!=3:
 					character._setMaxActions(character._getMaxActions()+1)
 					var percentage=character._getHealth()/character._getMaxHealth()
 					character._setMaxHealth(character._getMaxHealth()*1.5)
@@ -512,7 +512,7 @@ func _causalInterference(): #this is where I rig the dice
 			interferenceCount+=1
 		elif get_node("team2Bar").value/get_node("team2Bar").max_value > 1.5*(get_node("team1Bar").value/get_node("team1Bar").max_value):
 			for character in left:
-				if randi_range(1,2)==1:
+				if randi_range(1,3)!=3:
 					character._setMaxActions(character._getMaxActions()+1)
 					var percentage=character._getHealth()/character._getMaxHealth()
 					character._setMaxHealth(character._getMaxHealth()*1.5)
