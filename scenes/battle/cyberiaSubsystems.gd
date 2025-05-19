@@ -50,13 +50,13 @@ func _ready():
 	_accelaDistribution()
 func _moveLeft():
 	for allyCharacter in left:
-		if randi_range(0,4)==1:
+		if randi_range(0,3)==1:
 			allyCharacter._setMoveSpeed(allyCharacter._getMaxMoveSpeed())
 			_movementPhase(allyCharacter,left,right)
 
 func _moveRight():
 	for allyCharacter in right:
-		if randi_range(0,4)==1:
+		if randi_range(0,3)==1:
 			allyCharacter._setMoveSpeed(allyCharacter._getMaxMoveSpeed())
 			_movementPhase(allyCharacter,right,left)
 func _act3(): # N E S W 
@@ -72,10 +72,10 @@ func _act3(): # N E S W
 	
 	
 	for allyCharacter in left:
-		if randi_range(0,4)==1:
+		if randi_range(0,3)==1:
 			_aStormofSwords(allyCharacter,right)
 	for allyCharacter in right:
-		if randi_range(0,4)==1:
+		if randi_range(0,3)==1:
 			_aStormofSwords(allyCharacter,left)
 
 	_aFeastForCrows()
@@ -212,7 +212,7 @@ func _aStormofSwords(ally,enemyList):
 			if randi_range(0,ally._getSpeed())>randi_range(0,target._getDodge()) and target._getHealth()>0:
 				var damage
 				var tav
-				if ally._getActions()==ally._getMaxActions() and randi_range(0,5)==1:
+				if ally._getActions()==ally._getMaxActions() and randi_range(0,3)==1:
 					if ally._getRange()>1:
 						if randi_range(0,1)==1:
 							tav=preload("res://scenes/characterList/arrow.tscn")
@@ -481,7 +481,7 @@ func _returnal():
 
 func _on_tuturu() -> void:
 	Engine.physics_jitter_fix=0.5
-	Engine.time_scale=0.8
+	Engine.time_scale=1.0
 	var maxLeftHealth=0
 	var maxRightHealth=0
 	for leftCharacter in left:
