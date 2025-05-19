@@ -481,7 +481,7 @@ func _returnal():
 
 func _on_tuturu() -> void:
 	Engine.physics_jitter_fix=0.5
-	Engine.time_scale=0.2
+	Engine.time_scale=0.4
 	var maxLeftHealth=0
 	var maxRightHealth=0
 	for leftCharacter in left:
