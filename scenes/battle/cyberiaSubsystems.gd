@@ -32,7 +32,7 @@ var queueIndex=0
 var winnerFound=false
 var interferenceCount=0
 func _physics_process(delta: float) -> void:
-	if randi_range(0,1)==1: #OPTIMIZATION
+	if randi_range(0,2)==1: #OPTIMIZATION
 		_act3()
 		for i in range(5):
 			get_node("announcer").visible_characters=queueIndex
@@ -147,7 +147,7 @@ func _movementPhase(ally,allyList,enemyList):
 					#await get_tree().create_timer(randf_range(0.4,1.3)).timeout
 					movedCount+=1
 				ally._setMoveSpeed(ally._getMoveSpeed()-1)
-	if movedCount>0 and randi_range(0,(10*(countLeft.size()+countRight.size())))==0:
+	if movedCount>0 and randi_range(0,(25*(countLeft.size()+countRight.size())))==0:
 		get_node("announcer").text+=global._moved(ally._getName(),movedCount)
 		for i in range(randi_range(4,9)):
 			get_node("announcer").text+=" "
@@ -237,7 +237,7 @@ func _aStormofSwords(ally,enemyList):
 						target._setArmor(0)
 					else:
 						target._setArmor(target._getArmor()-damage)
-				if randi_range(0,2*(countLeft.size()+countRight.size()))==0 and damage>0 and randi_range(0,1)==1:
+				if randi_range(0,4*(countLeft.size()+countRight.size()))==0 and damage>0 and randi_range(0,1)==1:
 					get_node("announcer").text+=global._hitOther(ally._getName(),target._getName(),damage)
 					for time in range(randi_range(5,8)):
 						get_node("announcer").text+=" "
@@ -512,19 +512,17 @@ func _causalInterference(): #this is where I rig the dice
 				if randi_range(1,3)!=3:
 					character._setMaxActions(character._getMaxActions()+1)
 					character._setSpeed(character._getSpeed()*1.2)
-					character._setDodge(character._getDodge()*1.3)
 					var percentage=character._getHealth()/character._getMaxHealth()
-					character._setMaxHealth(character._getMaxHealth()*1.5)
-					character._setSpeed(character._getSpeed()*1.2)
-					character._setDodge(character._getDodge()*1.3)
+					character._setMaxHealth(character._getMaxHealth()*1.3)
 					character._setHealth(percentage*character._getMaxHealth())
 			interferenceCount+=1
 		elif get_node("team2Bar").value/get_node("team2Bar").max_value > 1.5*(get_node("team1Bar").value/get_node("team1Bar").max_value):
 			for character in left:
 				if randi_range(1,3)!=3:
 					character._setMaxActions(character._getMaxActions()+1)
+					character._setSpeed(character._getSpeed()*1.2)
 					var percentage=character._getHealth()/character._getMaxHealth()
-					character._setMaxHealth(character._getMaxHealth()*1.5)
+					character._setMaxHealth(character._getMaxHealth()*1.3)
 					character._setHealth(percentage*character._getMaxHealth())
 			interferenceCount+=1
 	
