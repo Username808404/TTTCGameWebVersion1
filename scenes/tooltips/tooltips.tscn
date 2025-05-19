@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=3 uid="uid://c2qyycka0bftq"]
+
+[ext_resource type="FontFile" uid="uid://cee1wv4ovmoti" path="res://scenes/alagard.ttf" id="1_4gcg1"]
+[ext_resource type="Script" uid="uid://bggo3n11l6ht1" path="res://scenes/tooltips/tooltips.gd" id="1_8eoqk"]
+[ext_resource type="FontFile" uid="uid://cg3tsfch1grkd" path="res://scenes/pixelmix.ttf" id="3_wjitg"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8eoqk"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wjitg"]
+bg_color = Color(0, 0, 0, 1)
+
+[node name="tooltips" type="VBoxContainer"]
+offset_right = 192.0
+offset_bottom = 425.0
+script = ExtResource("1_8eoqk")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="nameLabel" type="RichTextLabel" parent="HBoxContainer"]
+custom_minimum_size = Vector2(150, 30)
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("1_4gcg1")
+theme_override_styles/normal = SubResource("StyleBoxFlat_8eoqk")
+bbcode_enabled = true
+text = "asdfdfsadsfadfsafds"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="RichTextLabel" parent="HBoxContainer2"]
+custom_minimum_size = Vector2(150, 20)
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("3_wjitg")
+theme_override_font_sizes/normal_font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_wjitg")
+bbcode_enabled = true
+fit_content = true

@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://lgbssm3vgv8h"]
+
+[ext_resource type="Script" uid="uid://bylkrcf8giym" path="res://scenes/characterList/bullet.gd" id="1_0yam2"]
+[ext_resource type="Texture2D" uid="uid://cc62ylh2r22od" path="res://scenes/slash.png" id="2_0yam2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ypp78"]
+size = Vector2(12, 6)
+
+[node name="slash" type="CharacterBody2D"]
+script = ExtResource("1_0yam2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ypp78")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+scale = Vector2(1.5, 0.75)
+texture = ExtResource("2_0yam2")
+region_enabled = true
+region_rect = Rect2(14, 11, 4, 16)

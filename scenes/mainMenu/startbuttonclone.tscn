@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dfih5uolq8x7f"]
+
+[ext_resource type="Script" uid="uid://viccjhqeja51" path="res://scenes/mainMenu/startbuttonclone.gd" id="1_f0wp0"]
+
+[node name="startbuttonclone" type="Button"]
+offset_right = 8.0
+offset_bottom = 8.0
+script = ExtResource("1_f0wp0")

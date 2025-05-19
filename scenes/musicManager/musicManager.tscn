@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://1m6afy1qcc8t"]
+
+[ext_resource type="Script" uid="uid://0iryv4snp7nn" path="res://scenes/musicManager/music_manager.gd" id="1_d4mef"]
+
+[node name="MusicManager" type="Node"]
+script = ExtResource("1_d4mef")

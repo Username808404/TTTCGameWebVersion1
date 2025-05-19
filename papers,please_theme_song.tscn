@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://cqvnnylc7ql6a"]
+
+[ext_resource type="AudioStream" uid="uid://cnmqh2jlimlmy" path="res://scenes/mainMenu/Papers, Please_ Theme Song.mp3" id="1_rbofa"]
+[ext_resource type="Script" uid="uid://ckbq1kvlhh87c" path="res://scenes/mainMenu/papers,please_theme_song.gd" id="2_k7p7u"]
+
+[node name="Papers,PleaseThemeSong" type="AudioStreamPlayer"]
+stream = ExtResource("1_rbofa")
+script = ExtResource("2_k7p7u")

@@ -1,0 +1,37 @@
+[gd_scene load_steps=7 format=3 uid="uid://28e3pmabe3o"]
+
+[ext_resource type="Script" uid="uid://cefydjsraupf5" path="res://scenes/characterList/mary_anne.gd" id="1_hpvl2"]
+[ext_resource type="Texture2D" uid="uid://b65v0kqqgkx0w" path="res://scenes/urizen_onebit_tileset__v1d1.png" id="2_wi4hp"]
+[ext_resource type="Script" uid="uid://ca0r1ur02epe7" path="res://scenes/characterList/truemaryannetooltip.gd" id="3_rdac7"]
+[ext_resource type="Texture2D" uid="uid://by01nyludmic1" path="res://scenes/barBottom.png" id="4_u7q5n"]
+[ext_resource type="Texture2D" uid="uid://b3kb8dpe2cml3" path="res://scenes/barProgress.png" id="5_vjl5x"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ypp78"]
+size = Vector2(12, 12)
+
+[node name="maryAnne" type="CharacterBody2D"]
+script = ExtResource("1_hpvl2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ypp78")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_wi4hp")
+region_enabled = true
+region_rect = Rect2(430, 14, 12, 12)
+
+[node name="TextureButton" type="TextureButton" parent="."]
+offset_left = -6.0
+offset_top = -6.0
+offset_right = 6.0
+offset_bottom = 6.0
+script = ExtResource("3_rdac7")
+
+[node name="healthBar" type="TextureProgressBar" parent="."]
+offset_left = -59.0
+offset_top = -69.0
+offset_right = 69.0
+offset_bottom = 59.0
+texture_under = ExtResource("4_u7q5n")
+texture_progress = ExtResource("5_vjl5x")
+texture_progress_offset = Vector2(53, 61)

@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://dmxcvio2bunr"]
+
+[ext_resource type="Script" uid="uid://bylkrcf8giym" path="res://scenes/characterList/bullet.gd" id="1_4bld3"]
+[ext_resource type="Texture2D" uid="uid://btbtrtec2ybol" path="res://scenes/bullet2.png" id="2_4bld3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ypp78"]
+size = Vector2(12, 6)
+
+[node name="magicBolt" type="CharacterBody2D"]
+script = ExtResource("1_4bld3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ypp78")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_4bld3")
+region_enabled = true
+region_rect = Rect2(11, 15, 6, 1)

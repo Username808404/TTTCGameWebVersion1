@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://jko3xbu2ke2r"]
+
+[ext_resource type="AudioStream" uid="uid://b3oatwghxmxly" path="res://scenes/Chrono Trigger Soundtrack - Corridors of Time [HQ].mp3" id="1_l18ky"]
+
+[node name="ChronoTriggerSoundtrack-CorridorsOfTime[hq]" type="AudioStreamPlayer"]
+stream = ExtResource("1_l18ky")
+autoplay = true
