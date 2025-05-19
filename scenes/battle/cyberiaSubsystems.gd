@@ -97,7 +97,7 @@ func _movementPhase(ally,allyList,enemyList):
 		var targetIndex=distanceList.find(minDistance)
 		if targetIndex!=-1 and aliveEnemyList.size()>0:
 			var target=aliveEnemyList[targetIndex]
-			while minDistance>12*ally._getRange() and ally._getMoveSpeed()>0:
+			while ally._getMoveSpeed()>0: #minDistance>12*ally._getRange() and OPTIMIZATION
 				var moveOptionDistances=[10000,10000,10000,10000]
 				moveOptionDistances[0]=((ally.position+Vector2(0,-12)).distance_to(target.position)) #NORTH 
 				moveOptionDistances[1]=((ally.position+Vector2(12,0)).distance_to(target.position)) #EAST
@@ -131,9 +131,8 @@ func _movementPhase(ally,allyList,enemyList):
 					ally._setMoveSpeed(ally._getMoveSpeed()-1)
 					ally.set_process(false)
 				else:
-					if randi_range(1,10)>9:
-						var badShow=[0,2]
-						var madDirection=badShow[randi_range(0,1)]
+					if randi_range(1,10)>7:
+						var madDirection=randi_range(0,3)
 						if moveOptionDistances[madDirection]!=10000:
 							direction=madDirection
 					if direction==0 and ally._getHealth()>0:
@@ -214,9 +213,7 @@ func _aStormofSwords(ally,enemyList):
 				var tav
 				if ally._getActions()==ally._getMaxActions() and randi_range(0,3)==1:
 					if ally._getRange()>1:
-						if randi_range(0,1)==1:
-							tav=preload("res://scenes/characterList/arrow.tscn")
-						elif ally._getMagAtk()>0:
+						if ally._getMagAtk()>0:
 							tav=preload("res://scenes/characterList/magicBolt.tscn")
 						else:
 							tav=preload("res://scenes/characterList/bullet.tscn")
@@ -302,6 +299,8 @@ func _distributeItems(i,countIDList,countItemsList):
 func _aFeastForCrows():
 	var leftHealthTotal=0
 	var rightHealthTotal=0
+	var leftMaxHealthTotal=0
+	var rightMaxHealthTotal=0
 	var winner
 	for character in left:
 		character._updateHealthBar(character._getHealth(),character._getMaxHealth())
@@ -309,14 +308,18 @@ func _aFeastForCrows():
 			_burial(character)
 			left.remove_at(left.find(character))
 		leftHealthTotal+=character._getHealth()
+		leftMaxHealthTotal+=character._getMaxHealth()
 	for character in right:
 		character._updateHealthBar(character._getHealth(),character._getMaxHealth())
 		rightHealthTotal+=character._getHealth()
+		rightMaxHealthTotal+=character._getMaxHealth()
 		if character._getHealth()==0 and fallen.find(character)==-1:
 			_burial(character)
 			right.remove_at(right.find(character))
 	get_node("team1Bar").value=leftHealthTotal
+	get_node("team1Bar").max_value=leftMaxHealthTotal
 	get_node("team2Bar").value=rightHealthTotal
+	get_node("team2Bar").max_value=rightMaxHealthTotal
 	if leftHealthTotal==0:
 		if winnerFound==false:
 			global.challengers[global.challengers.find(true)]=false

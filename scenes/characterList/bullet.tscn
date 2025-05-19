@@ -13,6 +13,8 @@ script = ExtResource("1_gvd81")
 shape = SubResource("RectangleShape2D_ypp78")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-4.76837e-07, 0)
+scale = Vector2(1.91176, 1)
 texture = ExtResource("2_gvd81")
 region_enabled = true
 region_rect = Rect2(49, 63, 17, 2)

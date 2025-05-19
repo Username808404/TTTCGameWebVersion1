@@ -5206,15 +5206,13 @@ theme_override_fonts/font = ExtResource("4_0yh6x")
 text = "asdfdasf"
 
 [node name="team1Bar" type="ProgressBar" parent="."]
-offset_top = -72.0
 offset_right = 288.0
-offset_bottom = -45.0
+offset_bottom = 27.0
 
 [node name="team2Bar" type="ProgressBar" parent="."]
 offset_left = 360.0
-offset_top = -72.0
 offset_right = 648.0
-offset_bottom = -45.0
+offset_bottom = 27.0
 
 [node name="FrierenOst-FrierenVs_FrierenBattleTheme" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_h0kxc")

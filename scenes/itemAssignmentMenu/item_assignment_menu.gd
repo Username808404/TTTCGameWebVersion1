@@ -24,7 +24,10 @@ func _gridUpdate():
 		_anythingAnywhere(i,Vector2(x2,y), true)
 		x2+=8*12
 		if (i<=7):
-			itemList.insert(randi_range(0,itemList.size()-1),i)
+			var end=itemList.size()-1
+			if end<0:
+				end=0
+			itemList.insert(randi_range(0,end),i)
 	if itemList.size()==0 and backupItems.size()>0:
 		itemList.append(backupItems[0])
 		backupItems.remove_at(0)
