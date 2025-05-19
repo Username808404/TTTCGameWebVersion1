@@ -32,7 +32,7 @@ var queueIndex=0
 var winnerFound=false
 var interferenceCount=0
 func _physics_process(delta: float) -> void:
-	if randi_range(0,4)==1:
+	if randi_range(0,2)==1:
 		_act3()
 		for i in range(5):
 			get_node("announcer").visible_characters=queueIndex
@@ -50,13 +50,13 @@ func _ready():
 	_accelaDistribution()
 func _moveLeft():
 	for allyCharacter in left:
-		if randi_range(0,3)==1:
+		if randi_range(0,2)==1:
 			allyCharacter._setMoveSpeed(allyCharacter._getMaxMoveSpeed())
 			_movementPhase(allyCharacter,left,right)
 
 func _moveRight():
 	for allyCharacter in right:
-		if randi_range(0,3)==1:
+		if randi_range(0,2)==1:
 			allyCharacter._setMoveSpeed(allyCharacter._getMaxMoveSpeed())
 			_movementPhase(allyCharacter,right,left)
 func _act3(): # N E S W 
@@ -72,10 +72,10 @@ func _act3(): # N E S W
 	
 	
 	for allyCharacter in left:
-		if randi_range(0,3)==1:
+		if randi_range(0,2)==1:
 			_aStormofSwords(allyCharacter,right)
 	for allyCharacter in right:
-		if randi_range(0,3)==1:
+		if randi_range(0,2)==1:
 			_aStormofSwords(allyCharacter,left)
 
 	_aFeastForCrows()
