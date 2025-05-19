@@ -50,13 +50,13 @@ func _ready():
 	_accelaDistribution()
 func _moveLeft():
 	for allyCharacter in left:
-		if randi_range(0,2)<2: #OPTIMIZE
+		if randi_range(0,1)==1: #OPTIMIZE
 			allyCharacter._setMoveSpeed(allyCharacter._getMaxMoveSpeed())
 			_movementPhase(allyCharacter,left,right)
 
 func _moveRight():
 	for allyCharacter in right:
-		if randi_range(0,2)<2: #OPTIMIZE
+		if randi_range(0,1)==1: #OPTIMIZE
 			allyCharacter._setMoveSpeed(allyCharacter._getMaxMoveSpeed())
 			_movementPhase(allyCharacter,right,left)
 func _act3(): # N E S W 
@@ -72,10 +72,10 @@ func _act3(): # N E S W
 	
 	
 	for allyCharacter in left:
-		if randi_range(0,1)==1:
+		if randi_range(0,2)<2:
 			_aStormofSwords(allyCharacter,right)
 	for allyCharacter in right:
-		if randi_range(0,1)==1:
+		if randi_range(0,2)<2:
 			_aStormofSwords(allyCharacter,left)
 
 	_aFeastForCrows()
@@ -513,7 +513,7 @@ func _causalInterference(): #this is where I rig the dice
 					character._setMaxActions(character._getMaxActions()+1)
 					character._setSpeed(character._getSpeed()*1.2)
 					var percentage=character._getHealth()/character._getMaxHealth()
-					character._setMaxHealth(character._getMaxHealth()*1.3)
+					character._setMaxHealth(character._getMaxHealth()*1.1)
 					character._setHealth(percentage*character._getMaxHealth())
 			interferenceCount+=1
 		elif get_node("team2Bar").value/get_node("team2Bar").max_value > 1.5*(get_node("team1Bar").value/get_node("team1Bar").max_value):
@@ -522,7 +522,7 @@ func _causalInterference(): #this is where I rig the dice
 					character._setMaxActions(character._getMaxActions()+1)
 					character._setSpeed(character._getSpeed()*1.2)
 					var percentage=character._getHealth()/character._getMaxHealth()
-					character._setMaxHealth(character._getMaxHealth()*1.3)
+					character._setMaxHealth(character._getMaxHealth()*1.1)
 					character._setHealth(percentage*character._getMaxHealth())
 			interferenceCount+=1
 	
