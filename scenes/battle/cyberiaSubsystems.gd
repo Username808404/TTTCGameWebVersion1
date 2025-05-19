@@ -50,15 +50,15 @@ func _ready():
 	_accelaDistribution()
 func _moveLeft():
 	for allyCharacter in left:
-		if randi_range(0,1)==1: #OPTIMIZE
-			allyCharacter._setMoveSpeed(allyCharacter._getMaxMoveSpeed())
-			_movementPhase(allyCharacter,left,right)
+		#if randi_range(0,1)==1: #OPTIMIZE
+		allyCharacter._setMoveSpeed(allyCharacter._getMaxMoveSpeed())
+		_movementPhase(allyCharacter,left,right)
 
 func _moveRight():
 	for allyCharacter in right:
-		if randi_range(0,1)==1: #OPTIMIZE
-			allyCharacter._setMoveSpeed(allyCharacter._getMaxMoveSpeed())
-			_movementPhase(allyCharacter,right,left)
+		#if randi_range(0,1)==1: #OPTIMIZE
+		allyCharacter._setMoveSpeed(allyCharacter._getMaxMoveSpeed())
+		_movementPhase(allyCharacter,right,left)
 func _act3(): # N E S W 
 	_moveLeft()
 	_moveRight()
@@ -83,7 +83,8 @@ func _act3(): # N E S W
 		
 func _movementPhase(ally,allyList,enemyList):
 	var movedCount=0
-	if ally._getHealth()>0:
+	var yesMove=randi_range(0,1)
+	if ally._getHealth()>0 and yesMove==1:
 		var distanceList=[]
 		var aliveEnemyList=[]
 		for enemy in enemyList:
