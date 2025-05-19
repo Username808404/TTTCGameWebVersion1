@@ -72,11 +72,11 @@ func _act3(): # N E S W
 	
 	
 	for allyCharacter in left:
-		if randi_range(0,2)<2:
-			_aStormofSwords(allyCharacter,right)
+		#if randi_range(0,2)<2: #OPTIMIZE
+		_aStormofSwords(allyCharacter,right)
 	for allyCharacter in right:
-		if randi_range(0,2)<2:
-			_aStormofSwords(allyCharacter,left)
+		#if randi_range(0,2)<2: #OPTIMIZE
+		_aStormofSwords(allyCharacter,left)
 
 	_aFeastForCrows()
 	_causalInterference()
