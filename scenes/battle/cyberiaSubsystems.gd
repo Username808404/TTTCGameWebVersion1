@@ -510,7 +510,8 @@ func _causalInterference(): #this is where I rig the dice
 		if get_node("team1Bar").value/get_node("team1Bar").max_value > 1.5*(get_node("team2Bar").value/get_node("team2Bar").max_value):
 			for character in right:
 				if randi_range(1,3)!=3:
-					character._setMaxActions(character._getMaxActions()+1)
+					character._setPhysAtk(character._getPhysAtk()*1.2)
+					character._setMagAtk(character._getMagAtk()*1.2)
 					character._setSpeed(character._getSpeed()*1.2)
 					var percentage=character._getHealth()/character._getMaxHealth()
 					character._setMaxHealth(character._getMaxHealth()*1.1)
@@ -519,7 +520,8 @@ func _causalInterference(): #this is where I rig the dice
 		elif get_node("team2Bar").value/get_node("team2Bar").max_value > 1.5*(get_node("team1Bar").value/get_node("team1Bar").max_value):
 			for character in left:
 				if randi_range(1,3)!=3:
-					character._setMaxActions(character._getMaxActions()+1)
+					character._setPhysAtk(character._getPhysAtk()*1.2)
+					character._setMagAtk(character._getMagAtk()*1.2)
 					character._setSpeed(character._getSpeed()*1.2)
 					var percentage=character._getHealth()/character._getMaxHealth()
 					character._setMaxHealth(character._getMaxHealth()*1.1)
