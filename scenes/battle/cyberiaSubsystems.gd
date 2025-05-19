@@ -145,8 +145,8 @@ func _movementPhase(ally,allyList,enemyList):
 					elif direction==3 and ally._getHealth()>0:
 						ally._wanDance(ally.position+Vector2(-12,0))
 					#await get_tree().create_timer(randf_range(0.4,1.3)).timeout
-					movedCount+=1
-				ally._setMoveSpeed(ally._getMoveSpeed()-1)
+					movedCount+=randi_range(1,15)
+				ally._setMoveSpeed(ally._getMoveSpeed()-10) #OPTIMIZE
 	if movedCount>0 and randi_range(0,(25*(countLeft.size()+countRight.size())))==0:
 		get_node("announcer").text+=global._moved(ally._getName(),movedCount)
 		for i in range(randi_range(4,9)):
