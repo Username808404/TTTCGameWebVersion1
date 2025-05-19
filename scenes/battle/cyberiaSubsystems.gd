@@ -139,7 +139,7 @@ func _movementPhase(ally,allyList,enemyList):
 						ally._wanDance(ally.position+Vector2(0,12))
 					elif direction==3 and ally._getHealth()>0:
 						ally._wanDance(ally.position+Vector2(-12,0))
-					await get_tree().create_timer(randf_range(0.4,1.3)).timeout
+					#await get_tree().create_timer(randf_range(0.4,1.3)).timeout
 					movedCount+=1
 				ally._setMoveSpeed(ally._getMoveSpeed()-1)
 	if movedCount>0 and randi_range(0,(10*(countLeft.size()+countRight.size())))==0:
@@ -506,8 +506,12 @@ func _causalInterference(): #this is where I rig the dice
 			for character in right:
 				if randi_range(1,3)!=3:
 					character._setMaxActions(character._getMaxActions()+1)
+					character._setSpeed(character._getSpeed()*1.2)
+					character._setDodge(character._getDodge()*1.3)
 					var percentage=character._getHealth()/character._getMaxHealth()
 					character._setMaxHealth(character._getMaxHealth()*1.5)
+					character._setSpeed(character._getSpeed()*1.2)
+					character._setDodge(character._getDodge()*1.3)
 					character._setHealth(percentage*character._getMaxHealth())
 			interferenceCount+=1
 		elif get_node("team2Bar").value/get_node("team2Bar").max_value > 1.5*(get_node("team1Bar").value/get_node("team1Bar").max_value):
