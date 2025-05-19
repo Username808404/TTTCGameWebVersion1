@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dm1he62y6lsdv"]
 
-[ext_resource type="AudioStream" uid="uid://4vc4718dwstr" path="res://Touhou 4 - Music #01 - 幻想郷 (Gensokyo) ~ Lotus Land Story.mp3" id="1_3w5l6"]
+[ext_resource type="AudioStream" uid="uid://4vc4718dwstr" path="res://scenes/Touhou 4 - Music #01 - 幻想郷 (Gensokyo) ~ Lotus Land Story.mp3" id="1_3w5l6"]
 [ext_resource type="Script" uid="uid://bvdg12wsgt8c6" path="res://scenes/mainMenu/significance.gd" id="2_u0v4r"]
 
 [node name="Touhou4-LotusLandStory-opening" type="AudioStreamPlayer"]

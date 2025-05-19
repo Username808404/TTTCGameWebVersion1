@@ -57,8 +57,8 @@ func _moveRight():
 		allyCharacter._setMoveSpeed(allyCharacter._getMaxMoveSpeed())
 		_movementPhase(allyCharacter,right,left)
 func _act3(): # N E S W 
-	await _moveLeft()
-	await _moveRight()
+	_moveLeft()
+	_moveRight()
 	
 	for allyCharacter in left:
 		allyCharacter._setActions(allyCharacter._getMaxActions())

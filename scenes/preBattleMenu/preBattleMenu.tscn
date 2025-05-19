@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://clucae38oe6ib" path="res://scenes/preBattleMenu/pre_battle_menu.gd" id="1_ghyf6"]
 [ext_resource type="Texture2D" uid="uid://b65v0kqqgkx0w" path="res://scenes/urizen_onebit_tileset__v1d1.png" id="2_22irt"]
-[ext_resource type="AudioStream" uid="uid://b1rd5yu5o364c" path="res://significance.mp3" id="2_clcof"]
+[ext_resource type="AudioStream" uid="uid://b1rd5yu5o364c" path="res://scenes/significance.mp3" id="2_clcof"]
 [ext_resource type="FontFile" uid="uid://cee1wv4ovmoti" path="res://scenes/alagard.ttf" id="3_uu7fu"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_uu7fu"]

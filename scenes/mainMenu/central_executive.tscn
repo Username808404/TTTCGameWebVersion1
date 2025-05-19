@@ -7,8 +7,8 @@
 [ext_resource type="Script" uid="uid://bc4ahviusggnv" path="res://scenes/mainMenu/panel.gd" id="4_hxc88"]
 [ext_resource type="Script" uid="uid://dq2bglyl1haxu" path="res://scenes/mainMenu/credits_button.gd" id="5_5cagt"]
 [ext_resource type="Script" uid="uid://bqpl4n18cnb4j" path="res://scenes/mainMenu/rich_text_label.gd" id="5_lr3o3"]
-[ext_resource type="PackedScene" uid="uid://cqvnnylc7ql6a" path="res://papers,please_theme_song.tscn" id="7_wa3ik"]
-[ext_resource type="PackedScene" uid="uid://dm1he62y6lsdv" path="res://touhou_4_lotus_land_story_opening.tscn" id="9_5cagt"]
+[ext_resource type="PackedScene" uid="uid://cqvnnylc7ql6a" path="res://scenes/papers,please_theme_song.tscn" id="7_wa3ik"]
+[ext_resource type="PackedScene" uid="uid://dm1he62y6lsdv" path="res://scenes/touhou_4_lotus_land_story_opening.tscn" id="9_5cagt"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_u2oey"]
 texture = ExtResource("1_5cagt")

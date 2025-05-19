@@ -14,7 +14,7 @@
 [ext_resource type="Script" uid="uid://bnpuiu4e64dx4" path="res://scenes/itemAssignmentMenu/relic_tooltip.gd" id="10_omobj"]
 [ext_resource type="FontFile" uid="uid://cg3tsfch1grkd" path="res://scenes/pixelmix.ttf" id="11_d5b3q"]
 [ext_resource type="Script" uid="uid://bslin14vmkw8j" path="res://scenes/itemAssignmentMenu/time_tooltip.gd" id="11_fqs34"]
-[ext_resource type="PackedScene" uid="uid://jko3xbu2ke2r" path="res://chrono_trigger_soundtrack_corridors_of_time[hq].tscn" id="15_pifbf"]
+[ext_resource type="PackedScene" uid="uid://jko3xbu2ke2r" path="res://scenes/chrono_trigger_soundtrack_corridors_of_time[hq].tscn" id="15_pifbf"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fqs34"]
 texture = ExtResource("1_3w8v0")
