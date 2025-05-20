@@ -5261,7 +5261,6 @@ region_enabled = true
 region_rect = Rect2(261, 118, 12, 12)
 
 [node name="wildTooltip" type="TextureButton" parent="Node2D/wild"]
-visible = false
 offset_left = -7.0
 offset_top = -7.0
 offset_right = 7.0

@@ -5180,7 +5180,7 @@ theme_override_fonts/font = ExtResource("2_8n0nl")
 theme_override_font_sizes/font_size = 8
 text = "Based on The Things They Carried by Tim O' Brien
 
-All spaghetti scripting by Me, Kai.
+All scripting by Me, Kai.
 
 Damage calculation system based on Path of Achra by Ulfsire
 
@@ -5200,7 +5200,7 @@ Frieren the Slayer by Evan Call, from Frieren at the Funeral
 
 Cyberpunk Edgerunners by Studio Trigger and CD Projekt Red
 
-The chain Gleipnir from North Mythology
+The chain Gleipnir from Norse Mythology
 
 Peppa Pig by Hasbro
 
@@ -5217,6 +5217,8 @@ Total time to project completion: 1 Week
 
 "
 horizontal_alignment = 1
+visible_characters = 0
+visible_ratio = 0.0
 
 [node name="Button" type="Button" parent="."]
 offset_left = 12.0

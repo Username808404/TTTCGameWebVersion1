@@ -31,34 +31,34 @@ var queueIndex=0
 
 var winnerFound=false
 var interferenceCount=0
+var frameCount=0
 func _physics_process(delta: float) -> void:
-	if randi_range(0,2)==1: #OPTIMIZATION
+	if frameCount%3==0:
 		_act3()
 		for i in range(5):
 			get_node("announcer").visible_characters=queueIndex
 			if (queueIndex<=(get_node("announcer").text.length())):
 				queueIndex+=1
-			
+	frameCount+=1
+	print(frameCount)
 func _ready():
 	set_physics_process(false)
-	#global.challengers=[true,true,false,false] #DELETE 24-28, only temporary 
-	#global.team0=[9,9,9,9]
-	#global.team1=[9,9,9,9]
-	#global.team0Items=[9,9,9,9]
-	#global.team1Items=[3,3,3,3]
+	global.challengers=[true,true,false,false] #DELETE 24-28, only temporary 
+	global.team0=[0,1,8,9]
+	global.team1=[2,3,10,11]
+	global.team0Items=[9,9,9,9]
+	global.team1Items=[3,3,3,3]
 	_loadCharacters()
 	_accelaDistribution()
 func _moveLeft():
 	for allyCharacter in left:
-		if randi_range(0,1)==1: #OPTIMIZE
-			allyCharacter._setMoveSpeed(allyCharacter._getMaxMoveSpeed())
-			_movementPhase(allyCharacter,left,right)
+		allyCharacter._setMoveSpeed(allyCharacter._getMaxMoveSpeed())
+		_movementPhase(allyCharacter,left,right,0)
 
 func _moveRight():
 	for allyCharacter in right:
-		if randi_range(0,1)==1: #OPTIMIZE
-			allyCharacter._setMoveSpeed(allyCharacter._getMaxMoveSpeed())
-			_movementPhase(allyCharacter,right,left)
+		allyCharacter._setMoveSpeed(allyCharacter._getMaxMoveSpeed())
+		_movementPhase(allyCharacter,right,left,1)
 func _act3(): # N E S W 
 	_moveLeft()
 	_moveRight()
@@ -81,7 +81,7 @@ func _act3(): # N E S W
 	_aFeastForCrows()
 	_causalInterference()
 		
-func _movementPhase(ally,allyList,enemyList):
+func _movementPhase(ally,allyList,enemyList,teamNumber):
 	var movedCount=0
 	if ally._getHealth()>0:
 		var distanceList=[]
@@ -132,9 +132,14 @@ func _movementPhase(ally,allyList,enemyList):
 					ally.set_process(false)
 				else:
 					if randi_range(1,10)>7:
-						var madDirection=randi_range(0,3)
-						if moveOptionDistances[madDirection]!=10000:
-							direction=madDirection
+						var badShow=randi_range(0,2)
+						var madPossibilities
+						if teamNumber==0:
+							madPossibilities=[0,1,2]
+						else:
+							madPossibilities=[0,2,3]
+						if moveOptionDistances[madPossibilities[badShow]]!=10000:
+							direction=madPossibilities[badShow]
 					if direction==0 and ally._getHealth()>0:
 						ally._wanDance(ally.position+Vector2(0,-12))
 					elif direction==1 and ally._getHealth()>0:
@@ -285,9 +290,9 @@ func _distributeItems(i,countIDList,countItemsList):
 			i._setwillpower(i._getwillpower()+25)
 			i._setMagAtk(i._getMagAtk()+25)
 	elif countItemsList[index]==8:
-		get_node("announcer").text+=(i._getName() + " drinks [color=mistyrose]8 Seconds of Unused Time[/color]! +[color=mistyrose]3 max movement speed[/color]")
-		i._setMaxMoveSpeed(i._getMaxMoveSpeed()+3)
-		i._setMoveSpeed(i._getMaxMoveSpeed())
+		get_node("announcer").text+=(i._getName() + " drinks [color=mistyrose]8 Seconds of Unused Time[/color]! +[color=mistyrose]1 max action per turn[/color]")
+		i._setMaxActions(i._getMaxActions()+1)
+		i._setActions(i._getMaxActions())
 	elif countItemsList[index]==9:
 		get_node("announcer").text+=(i._getName() + " purchases [color=dodgerblue]Trauma Team Health Insurance[/color]! +[color=dodgerblue]40 health[/color]")
 		i._setMaxHealth(i._getMaxHealth()+40)
@@ -306,7 +311,6 @@ func _aFeastForCrows():
 		character._updateHealthBar(character._getHealth(),character._getMaxHealth())
 		if character._getHealth()==0 and fallen.find(character)==-1:
 			_burial(character)
-			left.remove_at(left.find(character))
 		leftHealthTotal+=character._getHealth()
 		leftMaxHealthTotal+=character._getMaxHealth()
 	for character in right:
@@ -315,7 +319,6 @@ func _aFeastForCrows():
 		rightMaxHealthTotal+=character._getMaxHealth()
 		if character._getHealth()==0 and fallen.find(character)==-1:
 			_burial(character)
-			right.remove_at(right.find(character))
 	get_node("team1Bar").value=leftHealthTotal
 	get_node("team1Bar").max_value=leftMaxHealthTotal
 	get_node("team2Bar").value=rightHealthTotal
