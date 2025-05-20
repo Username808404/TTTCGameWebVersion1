@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bgfswpu1xbddn"]
+
+[ext_resource type="Texture2D" uid="uid://8uvomxd3kh6s" path="res://scenes/tooltips/redProgress.png" id="1_d65xk"]
+
+[node name="healthBar" type="TextureProgressBar"]
+offset_left = -6.0
+offset_top = -8.0
+offset_right = -5.0
+offset_bottom = -7.0
+texture_progress = ExtResource("1_d65xk")

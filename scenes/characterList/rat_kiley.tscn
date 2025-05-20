@@ -1,10 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://du8xcnyrv33po"]
+[gd_scene load_steps=5 format=3 uid="uid://du8xcnyrv33po"]
 
 [ext_resource type="Script" uid="uid://d0ir3teu785qo" path="res://scenes/characterList/rat_kiley.gd" id="1_kfg14"]
 [ext_resource type="Texture2D" uid="uid://b65v0kqqgkx0w" path="res://scenes/urizen_onebit_tileset__v1d1.png" id="2_86pva"]
 [ext_resource type="Script" uid="uid://cyhsw2cocql45" path="res://scenes/characterList/trueratkileytooltip.gd" id="3_xtfv5"]
-[ext_resource type="Texture2D" uid="uid://by01nyludmic1" path="res://scenes/barBottom.png" id="4_oxlqi"]
-[ext_resource type="Texture2D" uid="uid://b3kb8dpe2cml3" path="res://scenes/barProgress.png" id="5_gmr74"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ypp78"]
 size = Vector2(12, 12)
@@ -27,12 +25,3 @@ offset_right = 6.0
 offset_bottom = 6.0
 script = ExtResource("3_xtfv5")
 metadata/_edit_use_anchors_ = true
-
-[node name="healthBar" type="TextureProgressBar" parent="."]
-offset_left = -59.0
-offset_top = -69.0
-offset_right = 69.0
-offset_bottom = 59.0
-texture_under = ExtResource("4_oxlqi")
-texture_progress = ExtResource("5_gmr74")
-texture_progress_offset = Vector2(53, 61)

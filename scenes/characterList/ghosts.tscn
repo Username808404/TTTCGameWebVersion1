@@ -1,10 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://34nclq8aec4n"]
+[gd_scene load_steps=5 format=3 uid="uid://34nclq8aec4n"]
 
 [ext_resource type="Script" uid="uid://cpnuiun0jiquo" path="res://scenes/characterList/ghost.gd" id="1_x4uhy"]
 [ext_resource type="Texture2D" uid="uid://b65v0kqqgkx0w" path="res://scenes/urizen_onebit_tileset__v1d1.png" id="2_wpjgy"]
 [ext_resource type="Script" uid="uid://dacbgcj6tly31" path="res://scenes/characterList/trueghosttooltip.gd" id="3_bna4r"]
-[ext_resource type="Texture2D" uid="uid://by01nyludmic1" path="res://scenes/barBottom.png" id="4_ektc0"]
-[ext_resource type="Texture2D" uid="uid://b3kb8dpe2cml3" path="res://scenes/barProgress.png" id="5_xq4xj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ypp78"]
 size = Vector2(12, 12)
@@ -27,12 +25,3 @@ offset_top = -6.0
 offset_right = 6.0
 offset_bottom = 6.0
 script = ExtResource("3_bna4r")
-
-[node name="healthBar" type="TextureProgressBar" parent="."]
-offset_left = -59.0
-offset_top = -69.0
-offset_right = 69.0
-offset_bottom = 59.0
-texture_under = ExtResource("4_ektc0")
-texture_progress = ExtResource("5_xq4xj")
-texture_progress_offset = Vector2(53, 61)

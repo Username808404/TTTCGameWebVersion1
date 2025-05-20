@@ -170,5 +170,4 @@ func _anythingAnywhere(id, coordinates, assignmentScale):
 		instance.get_node("Sprite2D").scale=Vector2(4,4)
 		instance.get_node("TextureButton").scale=Vector2(4,4)
 		instance.get_node("TextureButton").position=Vector2(-24,-24)
-		instance.get_node("healthBar").visible=false
 		add_child(instance)

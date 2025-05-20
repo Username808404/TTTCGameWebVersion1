@@ -44,8 +44,8 @@ func _physics_process(delta: float) -> void:
 func _ready():
 	set_physics_process(false)
 	global.challengers=[true,true,false,false] #DELETE 24-28, only temporary 
-	global.team0=[0,1,8,9]
-	global.team1=[2,3,10,11]
+	global.team0=[0,0,0,0]
+	global.team1=[0,0,0,0]
 	global.team0Items=[9,9,9,9]
 	global.team1Items=[3,3,3,3]
 	_loadCharacters()
@@ -490,13 +490,19 @@ func _on_tuturu() -> void:
 	Engine.time_scale=1.0
 	var maxLeftHealth=0
 	var maxRightHealth=0
+	var leftHealthBar=preload("res://scenes/tooltips/teamLeftHealthBar.tscn")
+	var rightHealthBar=preload("res://scenes/tooltips/teamRightHealthBar.tscn")
 	for leftCharacter in left:
 		leftCharacter.z_index=1
+		var healthBar=leftHealthBar.instantiate()
+		leftCharacter.add_child(healthBar)
 		leftCharacter._setMaxHealth(leftCharacter._getMaxHealth()+(2*leftCharacter._getMaxHealth()/(leftCharacter._getCount())))
 		leftCharacter._setHealth(leftCharacter._getMaxHealth())
 		maxLeftHealth+=leftCharacter._getMaxHealth()
 	for rightCharacter in right:
 		rightCharacter.z_index=1
+		var healthBar=rightHealthBar.instantiate()
+		rightCharacter.add_child(healthBar)
 		rightCharacter._setMaxHealth(rightCharacter._getMaxHealth()+(2*rightCharacter._getMaxHealth()/(rightCharacter._getCount())))
 		rightCharacter._setHealth(rightCharacter._getMaxHealth())
 		maxRightHealth+=rightCharacter._getMaxHealth() 
