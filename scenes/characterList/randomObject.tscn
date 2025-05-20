@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://ciydgfla28nr1"]
+
+[ext_resource type="Script" uid="uid://bylkrcf8giym" path="res://scenes/characterList/bullet.gd" id="1_6buvx"]
+[ext_resource type="Texture2D" uid="uid://b65v0kqqgkx0w" path="res://scenes/urizen_onebit_tileset__v1d1.png" id="2_6buvx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ypp78"]
+size = Vector2(12, 6)
+
+[node name="randomShape" type="CharacterBody2D"]
+z_index = 10
+script = ExtResource("1_6buvx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ypp78")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_6buvx")
+region_enabled = true
+region_rect = Rect2(677, 287, 12, 12)

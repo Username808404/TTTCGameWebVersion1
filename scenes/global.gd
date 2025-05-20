@@ -37,3 +37,6 @@ func _hitOther(allyName, enemyName, damageDealt):
 	enemyName + " loses " +"[color=red]"+str(damageDealt)+"[/color] [color=red]years of their lifespawn[/color] to " + allyName,
 	]
 	return(hitStrings[randi_range(0,3)])
+
+func _trueRandom():
+	return(randi_range(4,8))

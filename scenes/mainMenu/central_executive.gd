@@ -1,13 +1,11 @@
 extends Node2D
 var team=[]
 var frameCounter=0
-var frameCounter2=0
 var rotationSpeeds=[]
 var centerClones=[]
 var tide=true
+var tav=preload("res://scenes/characterList/randomObject.tscn")
 func _physics_process(delta: float) -> void:
-	if frameCounter%10==0:
-		frameCounter2+=1
 	get_node("galaxyCenter").rotation_degrees=frameCounter/2
 	get_node("galaxyCenter/theSun").rotation_degrees=frameCounter/2
 	get_node("galaxyCenter/theSun/theMoon").rotation_degrees=frameCounter*2
@@ -17,9 +15,9 @@ func _physics_process(delta: float) -> void:
 		for child in clone.get_children():
 			child.rotation_degrees=frameCounter*rotationSpeeds[counter]
 			if tide==false:
-				child.position=child.position+Vector2(0.1,0.1)
+				child.position=child.position+Vector2(0.05,0.05)
 			else:
-				child.position=child.position+Vector2(-0.1,-0.1)
+				child.position=child.position+Vector2(-0.05,-0.05)
 		counter+=1
 	frameCounter+=1
 	if frameCounter%800==0:
@@ -58,22 +56,25 @@ func _ready():
 		elif (id==11):
 			tav=preload("res://scenes/characterList/pepperion_pigs.tscn")
 		elif (id==12):
-			tav=preload("res://scenes/characterList/ghosts.tscn")
+			tav=preload("res://scenes/characterList/randomObject.tscn")
 		elif (id==13):
-			tav=preload("res://scenes/characterList/snakes.tscn")
+			tav=preload("res://scenes/characterList/randomObject.tscn")
 		elif (id==14):
-			tav=preload("res://scenes/characterList/lost_medics.tscn")
+			tav=preload("res://scenes/characterList/randomObject.tscn")
 		elif (id==15):
-			tav=preload("res://scenes/characterList/friend.tscn")
+			tav=preload("res://scenes/characterList/randomObject.tscn")
 		var instance=tav.instantiate()
+		if id>=12:
+			instance.randomNess=true
 		var centerClone=get_node("galaxyCenter2").duplicate()
 		add_child(centerClone)
 		centerClones.append(centerClone)
 		centerClone.add_child(instance)
 		team.append(instance)
-	
+		for clone in centerClones:
+			clone.position=clone.position+Vector2(randi_range(-10,10),randi_range(-10,10))
 	for character in team:
 		character.position=(character.position+Vector2(randi_range(-10,10)*12,randf_range(-10,10)*12))
-		rotationSpeeds.append((10*(0.6/(character.position.distance_to(get_node("galaxyCenter").position)/100)))+randf_range(0,0.3))
+		rotationSpeeds.append((7*(0.6/(character.position.distance_to(get_node("galaxyCenter").position)/100)))+randf_range(0,0.3))
 		character.get_node("Sprite2D").z_as_relative=false
 		

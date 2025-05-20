@@ -11,7 +11,7 @@ func _wanDance(additiveVector):
 
 func _process(delta: float) -> void:
 	if (self.position!=end):
-		self.position=self.position.move_toward(end,delta*125)
+		self.position=self.position.move_toward(end,delta*75)
 
 
 var maxHealth =200*20

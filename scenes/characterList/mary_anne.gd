@@ -15,7 +15,7 @@ func _wanDance(additiveVector):
 
 func _process(delta: float) -> void:
 	if (self.position!=end):
-		self.position=self.position.move_toward(end,delta*125)
+		self.position=self.position.move_toward(end,delta*100)
 
 var dodge = 50 # +10 with jungle spirit
 var speed = 50 # +10 with jungle spirit 

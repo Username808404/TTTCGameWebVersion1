@@ -7,6 +7,7 @@
 size = Vector2(12, 6)
 
 [node name="magicBolt" type="CharacterBody2D"]
+z_index = 10
 script = ExtResource("1_p671u")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

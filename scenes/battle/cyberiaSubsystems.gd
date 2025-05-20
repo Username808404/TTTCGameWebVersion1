@@ -31,6 +31,7 @@ var queueIndex=0
 
 var winnerFound=false
 var interferenceCount=0
+var interferenceMax=global._trueRandom()
 var frameCount=0
 func _physics_process(delta: float) -> void:
 	if frameCount%3==0:
@@ -40,14 +41,13 @@ func _physics_process(delta: float) -> void:
 			if (queueIndex<=(get_node("announcer").text.length())):
 				queueIndex+=1
 	frameCount+=1
-	print(frameCount)
 func _ready():
 	set_physics_process(false)
-	global.challengers=[true,true,false,false] #DELETE 24-28, only temporary 
-	global.team0=[0,0,0,0]
-	global.team1=[0,0,0,0]
-	global.team0Items=[9,9,9,9]
-	global.team1Items=[3,3,3,3]
+	#global.challengers=[true,true,false,false] #DELETE 24-28, only temporary 
+	#global.team0=[0,0,0,11]
+	#global.team1=[0,0,0,0]
+	#global.team0Items=[9,9,9,9]
+	#global.team1Items=[3,3,3,3]
 	_loadCharacters()
 	_accelaDistribution()
 func _moveLeft():
@@ -60,15 +60,17 @@ func _moveRight():
 		allyCharacter._setMoveSpeed(allyCharacter._getMaxMoveSpeed())
 		_movementPhase(allyCharacter,right,left,1)
 func _act3(): # N E S W 
-	_moveLeft()
-	_moveRight()
+	if randi_range(0,2)<2: #OPTIMIZE
+		_moveLeft()
+	if randi_range(0,2)<2: #OPTIMIZE
+		_moveRight()
 	
 	for allyCharacter in left:
 		allyCharacter._setActions(allyCharacter._getMaxActions())
-		_abilityPhase(allyCharacter,left,right)
+		_abilityPhase(allyCharacter,left,right,0)
 	for allyCharacter in right:
 		allyCharacter._setActions(allyCharacter._getMaxActions())
-		_abilityPhase(allyCharacter,right,left)
+		_abilityPhase(allyCharacter,right,left,1)
 	
 	
 	for allyCharacter in left:
@@ -131,7 +133,7 @@ func _movementPhase(ally,allyList,enemyList,teamNumber):
 					ally._setMoveSpeed(ally._getMoveSpeed()-1)
 					ally.set_process(false)
 				else:
-					if randi_range(1,10)>7:
+					if randi_range(1,10)>8:
 						var badShow=randi_range(0,2)
 						var madPossibilities
 						if teamNumber==0:
@@ -156,7 +158,7 @@ func _movementPhase(ally,allyList,enemyList,teamNumber):
 		for i in range(randi_range(4,9)):
 			get_node("announcer").text+=" "
 
-func _abilityPhase(ally,allyList,enemyList):
+func _abilityPhase(ally,allyList,enemyList,teamNumber):
 	var healedTargets=0
 	var healPotential=0
 	var medicFound=false
@@ -191,9 +193,17 @@ func _abilityPhase(ally,allyList,enemyList):
 		get_node("announcer").text+=ally._getName()+" brings in some pet [color=Lawngreen]Snakes[/color]!    "
 		var tav=preload("res://scenes/characterList/snakes.tscn")
 		for i in range(5):
+			var leftHealthBar=preload("res://scenes/tooltips/teamLeftHealthBar.tscn")
+			var rightHealthBar=preload("res://scenes/tooltips/teamRightHealthBar.tscn")
+			var healthBar
+			if teamNumber==0:
+				healthBar=leftHealthBar.instantiate()
+			else:
+				healthBar=rightHealthBar.instantiate()
 			var instance=tav.instantiate()
 			instance.global_position=Vector2(randi_range(0,300),randi_range(100,200))
 			add_child(instance)
+			instance.add_child(healthBar)
 			allyList.append(instance)
 func _aStormofSwords(ally,enemyList):
 	var distanceList=[]
@@ -225,9 +235,9 @@ func _aStormofSwords(ally,enemyList):
 					else:
 						tav=preload("res://scenes/characterList/slash.tscn")
 					var instance=tav.instantiate()
-					instance.global_position=ally.position
+					instance.position=ally.position
+					instance.attackRange=ally._getRange()
 					add_child(instance)
-					instance.look_at(target.position)
 					instance._wanDance(target.position)
 				if ally._getMagAtk()>0.5*ally._getPhysAtk():
 					damage=randi_range(0,ally._getMagAtk())
@@ -239,7 +249,7 @@ func _aStormofSwords(ally,enemyList):
 						target._setArmor(0)
 					else:
 						target._setArmor(target._getArmor()-damage)
-				if randi_range(0,4*(countLeft.size()+countRight.size()))==0 and damage>0 and randi_range(0,1)==1:
+				if randi_range(0,4*(countLeft.size()+countRight.size()))==0 and damage>0:
 					get_node("announcer").text+=global._hitOther(ally._getName(),target._getName(),damage)
 					for time in range(randi_range(5,8)):
 						get_node("announcer").text+=" "
@@ -306,7 +316,6 @@ func _aFeastForCrows():
 	var rightHealthTotal=0
 	var leftMaxHealthTotal=0
 	var rightMaxHealthTotal=0
-	var winner
 	for character in left:
 		character._updateHealthBar(character._getHealth(),character._getMaxHealth())
 		if character._getHealth()==0 and fallen.find(character)==-1:
@@ -323,6 +332,7 @@ func _aFeastForCrows():
 	get_node("team1Bar").max_value=leftMaxHealthTotal
 	get_node("team2Bar").value=rightHealthTotal
 	get_node("team2Bar").max_value=rightMaxHealthTotal
+	var winner
 	if leftHealthTotal==0:
 		if winnerFound==false:
 			global.challengers[global.challengers.find(true)]=false
@@ -518,25 +528,21 @@ func _on_win_button_pressed() -> void:
 	_returnal()
 
 func _causalInterference(): #this is where I rig the dice
-	if interferenceCount<6:
+	if interferenceCount<interferenceMax:
 		if get_node("team1Bar").value/get_node("team1Bar").max_value > 1.5*(get_node("team2Bar").value/get_node("team2Bar").max_value):
 			for character in right:
 				if randi_range(1,3)!=3:
-					character._setPhysAtk(character._getPhysAtk()*1.2)
-					character._setMagAtk(character._getMagAtk()*1.2)
-					character._setSpeed(character._getSpeed()*1.2)
+					character._setPhysAtk(character._getPhysAtk()*1.3)
+					character._setMagAtk(character._getMagAtk()*1.3)
+					character._setSpeed(character._getSpeed()*1.3)
 					var percentage=character._getHealth()/character._getMaxHealth()
-					character._setMaxHealth(character._getMaxHealth()*1.1)
-					character._setHealth(percentage*character._getMaxHealth())
 			interferenceCount+=1
 		elif get_node("team2Bar").value/get_node("team2Bar").max_value > 1.5*(get_node("team1Bar").value/get_node("team1Bar").max_value):
 			for character in left:
 				if randi_range(1,3)!=3:
-					character._setPhysAtk(character._getPhysAtk()*1.2)
-					character._setMagAtk(character._getMagAtk()*1.2)
-					character._setSpeed(character._getSpeed()*1.2)
+					character._setPhysAtk(character._getPhysAtk()*1.3)
+					character._setMagAtk(character._getMagAtk()*1.3)
+					character._setSpeed(character._getSpeed()*1.3)
 					var percentage=character._getHealth()/character._getMaxHealth()
-					character._setMaxHealth(character._getMaxHealth()*1.1)
-					character._setHealth(percentage*character._getMaxHealth())
 			interferenceCount+=1
 	
