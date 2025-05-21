@@ -545,12 +545,14 @@ func _anythingAnywhere(id, x3,y3, flip, side,abilityScale,power):
 		if id==11:
 			instance._setMaxHealth(instance._getMaxHealth()*float(1.2+float(power/10.0)))
 			instance._setHealth(instance._getMaxHealth())
-			instance._setSpeed(instance._getSpeed()+power)
+			instance._setSpeed(instance._getSpeed()+power+2)
+			instance._setDodge(instance._getDodge()+power+2)
 			instance._setName("[color=pink]Great Potbellied Boar[/color]")
 		elif id==8:
 			instance._setMaxHealth(instance._getMaxHealth()*float(1.2+1.2*float(power/10.0)))
 			instance._setHealth(instance._getMaxHealth())
-			instance._setSpeed(instance._getSpeed()+power)
+			instance._setSpeed(instance._getSpeed()+power+5)
+			instance._setDodge(instance._getDodge()+power+5)
 			instance._setName("[color=darkorange]Hobgobbo Elite[/color]")
 	add_child(instance)
 	if (flip==true):
