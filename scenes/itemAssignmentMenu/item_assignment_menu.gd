@@ -27,7 +27,10 @@ func _gridUpdate():
 			var end=itemList.size()-1
 			if end<0:
 				end=0
-			itemList.insert(randi_range(0,end),i)
+			if randi_range(0,1)==0:
+				itemList.insert(randi_range(0,end),i)
+			else:
+				itemList.append(i)
 	if itemList.size()==0 and backupItems.size()>0:
 		itemList.append(backupItems[0])
 		backupItems.remove_at(0)

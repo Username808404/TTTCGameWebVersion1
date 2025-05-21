@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=4 uid="uid://b7w67hbqptnsx"]
+[gd_scene load_steps=11 format=4 uid="uid://b7w67hbqptnsx"]
 
 [ext_resource type="Texture2D" uid="uid://b65v0kqqgkx0w" path="res://scenes/urizen_onebit_tileset__v1d1.png" id="1_7gynk"]
 [ext_resource type="Script" uid="uid://dja6h8vsxcpu2" path="res://scenes/battle/cyberiaSubsystems.gd" id="1_xd4uy"]
 [ext_resource type="FontFile" uid="uid://cg3tsfch1grkd" path="res://scenes/pixelmix.ttf" id="3_xd4uy"]
 [ext_resource type="FontFile" uid="uid://cee1wv4ovmoti" path="res://scenes/alagard.ttf" id="4_0yh6x"]
 [ext_resource type="AudioStream" uid="uid://da2l3sxv72ncp" path="res://scenes/battle/Frieren OST - Frieren VS. Frieren Battle Theme.mp3" id="5_h0kxc"]
+[ext_resource type="Texture2D" uid="uid://dcp75l54nqgba" path="res://scenes/Untitled 05-20-2025 10-45-29.png" id="6_fh7rg"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_h0kxc"]
 texture = ExtResource("1_7gynk")
@@ -5167,6 +5168,12 @@ tile_size = Vector2i(12, 12)
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_h0kxc")
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h0kxc"]
+bg_color = Color(0.937255, 0.937255, 0.937255, 0.160784)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fh7rg"]
+bg_color = Color(0.937255, 0.937255, 0.937255, 0.160784)
+
 [node name="Battle" type="Node2D"]
 script = ExtResource("1_xd4uy")
 
@@ -5188,6 +5195,7 @@ offset_bottom = 356.0
 theme_override_fonts/normal_font = ExtResource("3_xd4uy")
 theme_override_font_sizes/normal_font_size = 8
 bbcode_enabled = true
+scroll_active = false
 scroll_following = true
 
 [node name="Line2D" type="Line2D" parent="."]
@@ -5221,5 +5229,88 @@ offset_bottom = -21.0
 stream = ExtResource("5_h0kxc")
 autoplay = true
 
+[node name="leftAbilityButton" type="Button" parent="."]
+z_index = 1
+z_as_relative = false
+offset_top = 324.0
+offset_right = 96.0
+offset_bottom = 348.0
+theme_override_fonts/font = ExtResource("3_xd4uy")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_h0kxc")
+
+[node name="richTextLabel" type="RichTextLabel" parent="leftAbilityButton"]
+z_as_relative = false
+layout_mode = 0
+offset_right = 96.0
+offset_bottom = 24.0
+mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("3_xd4uy")
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="leftAbilityButton"]
+layout_mode = 0
+offset_top = -12.0
+offset_right = 8.0
+offset_bottom = -11.0
+scale = Vector2(12, 6)
+max_value = 10.0
+step = 0.1
+texture_progress = ExtResource("6_fh7rg")
+
+[node name="rightAbilityButton" type="Button" parent="."]
+z_index = 1
+z_as_relative = false
+offset_left = 540.0
+offset_top = 324.0
+offset_right = 636.0
+offset_bottom = 348.0
+theme_override_fonts/font = ExtResource("3_xd4uy")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_fh7rg")
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="rightAbilityButton"]
+layout_mode = 0
+offset_top = -12.0
+offset_right = 8.0
+offset_bottom = -11.0
+scale = Vector2(12, 6)
+max_value = 10.0
+step = 0.1
+texture_progress = ExtResource("6_fh7rg")
+
+[node name="richTextLabel" type="RichTextLabel" parent="rightAbilityButton"]
+z_as_relative = false
+layout_mode = 0
+offset_right = 96.0
+offset_bottom = 24.0
+mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("3_xd4uy")
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="backbutton" type="Button" parent="."]
+z_index = 1
+z_as_relative = false
+offset_right = 96.0
+offset_bottom = 24.0
+theme_override_fonts/font = ExtResource("3_xd4uy")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_fh7rg")
+text = "Back"
+
+[connection signal="adrenaline" from="." to="." method="_on_adrenaline"]
+[connection signal="fire" from="." to="." method="_on_fire"]
+[connection signal="gobbo" from="." to="." method="_on_gobbo"]
+[connection signal="pigs" from="." to="." method="_on_pigs"]
+[connection signal="prayer" from="." to="." method="_on_prayer"]
 [connection signal="tuturu" from="." to="." method="_on_tuturu"]
 [connection signal="pressed" from="winButton" to="." method="_on_win_button_pressed"]
+[connection signal="pressed" from="leftAbilityButton" to="." method="_on_left_ability_button_pressed"]
+[connection signal="pressed" from="rightAbilityButton" to="." method="_on_right_ability_button_pressed"]
+[connection signal="pressed" from="backbutton" to="." method="_on_backbutton_pressed"]

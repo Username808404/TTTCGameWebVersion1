@@ -15,7 +15,7 @@ func _wanDance(additiveVector):
 
 func _process(delta: float) -> void:
 	if (self.position!=end):
-		self.position=self.position.move_toward(end,delta*75)
+		self.position=self.position.move_toward(end,delta*75*speedForce)
 
 var dodge = 25 # +25 with ethereal transcendence  
 var speed = 40 
@@ -25,6 +25,7 @@ var willpower= 10 # +25 with ethereal transcendence
 
 var physAtk = 0
 var magAtk = 10 # +25 with ethereal transcendence 
+var speedForce=1
 
 var maxMoveSpeed=4
 var moveSpeed = 4

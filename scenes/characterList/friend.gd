@@ -3,6 +3,7 @@ var maxHealth = 150 *20
 var maxArmor = 0
 var health = 150 *20
 var armor = 0
+var speedForce=1
 var charName="[color=Crimson]???????[/color]"
 var end=self.position
 var start=self.position
@@ -15,7 +16,7 @@ func _wanDance(additiveVector):
 
 func _process(delta: float) -> void:
 	if (self.position!=end):
-		self.position=self.position.move_toward(end,delta*100)
+		self.position=self.position.move_toward(end,delta*100*speedForce)
 
 var dodge = 50
 var speed = 50

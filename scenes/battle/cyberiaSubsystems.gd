@@ -1,5 +1,12 @@
 extends Node2D #CYBERIA SUBSYSTEMS CENTRAL CONTROL NODE 
 signal tuturu
+
+signal fire #Ability activation signals
+signal pigs
+signal adrenaline
+signal prayer 
+signal gobbo
+
 var challenger0=[] #contains IDs for left side team
 var challenger1=[] #contains IDs for right side team 
 
@@ -24,15 +31,23 @@ var y=12*5+6
 var currentTurn=0
 
 var deathRectangles=[Rect2(534,508,12,12),Rect2(27,495,12,12),Rect2(495,508,12,12),Rect2(92,508,12,12),Rect2(1,495,12,12)]
-var fallen=[]
+var fallenLeft=[]
+var fallenRight=[]
+var abilityList=[0,1,2,3,4] 
 
-var announcerQueue=""
 var queueIndex=0
 
 var winnerFound=false
 var interferenceCount=0
 var interferenceMax=global._trueRandom()
 var frameCount=0
+
+var leftAbilityCharge=0
+var rightAbilityCharge=0
+var leftAbility
+var rightAbility
+var leftFire=false
+var rightFire=false
 func _physics_process(delta: float) -> void:
 	if frameCount%3==0:
 		_act3()
@@ -40,14 +55,23 @@ func _physics_process(delta: float) -> void:
 			get_node("announcer").visible_characters=queueIndex
 			if (queueIndex<=(get_node("announcer").text.length())):
 				queueIndex+=1
+		if frameCount%120==0 and leftAbilityCharge<10:
+			leftAbilityCharge+=1
+			get_node("leftAbilityButton/TextureProgressBar").value=leftAbilityCharge
+		if frameCount%120==0 and rightAbilityCharge<10:
+			rightAbilityCharge+=1
+			get_node("rightAbilityButton/TextureProgressBar").value=rightAbilityCharge
 	frameCount+=1
+
+
 func _ready():
 	set_physics_process(false)
 	#global.challengers=[true,true,false,false] #DELETE 24-28, only temporary 
-	#global.team0=[0,0,0,11]
-	#global.team1=[0,0,0,0]
-	#global.team0Items=[9,9,9,9]
-	#global.team1Items=[3,3,3,3]
+	#global.team0=[0,1,8,11]
+	#global.team1=[0,1,8,11]
+	#global.team0Items=[0,1,9,9]
+	#global.team1Items=[0,1,9,9]
+	_musicOfDragons()
 	_loadCharacters()
 	_accelaDistribution()
 func _moveLeft():
@@ -75,10 +99,10 @@ func _act3(): # N E S W
 	
 	for allyCharacter in left:
 		#if randi_range(0,2)<2: #OPTIMIZE
-		_aStormofSwords(allyCharacter,right)
+		_aStormofSwords(allyCharacter,right,0)
 	for allyCharacter in right:
 		#if randi_range(0,2)<2: #OPTIMIZE
-		_aStormofSwords(allyCharacter,left)
+		_aStormofSwords(allyCharacter,left,1)
 
 	_aFeastForCrows()
 	_causalInterference()
@@ -205,7 +229,7 @@ func _abilityPhase(ally,allyList,enemyList,teamNumber):
 			add_child(instance)
 			instance.add_child(healthBar)
 			allyList.append(instance)
-func _aStormofSwords(ally,enemyList):
+func _aStormofSwords(ally,enemyList,sideNumber):
 	var distanceList=[]
 	var aliveEnemyList=[]
 	for enemy in enemyList:
@@ -234,6 +258,8 @@ func _aStormofSwords(ally,enemyList):
 							tav=preload("res://scenes/characterList/bullet.tscn")
 					else:
 						tav=preload("res://scenes/characterList/slash.tscn")
+					if (sideNumber==0 and leftFire==true) or (sideNumber==1 and rightFire==true):
+						tav=preload("res://scenes/characterList/fire.tscn")
 					var instance=tav.instantiate()
 					instance.position=ally.position
 					instance.attackRange=ally._getRange()
@@ -318,16 +344,24 @@ func _aFeastForCrows():
 	var rightMaxHealthTotal=0
 	for character in left:
 		character._updateHealthBar(character._getHealth(),character._getMaxHealth())
-		if character._getHealth()==0 and fallen.find(character)==-1:
-			_burial(character)
 		leftHealthTotal+=character._getHealth()
-		leftMaxHealthTotal+=character._getMaxHealth()
+		if character._getHealth()==0 and fallenLeft.find(character)==-1:
+			left.remove_at(left.find(character))
+			_burial(character,0)
 	for character in right:
 		character._updateHealthBar(character._getHealth(),character._getMaxHealth())
 		rightHealthTotal+=character._getHealth()
+		if character._getHealth()==0 and fallenRight.find(character)==-1:
+			right.remove_at(right.find(character))
+			_burial(character,1)
+	for character in left:
+		leftMaxHealthTotal+=character._getMaxHealth()
+	for character in fallenLeft:
+		leftMaxHealthTotal+=character._getMaxHealth()
+	for character in right:
 		rightMaxHealthTotal+=character._getMaxHealth()
-		if character._getHealth()==0 and fallen.find(character)==-1:
-			_burial(character)
+	for character in fallenRight:
+		rightMaxHealthTotal+=character._getMaxHealth()
 	get_node("team1Bar").value=leftHealthTotal
 	get_node("team1Bar").max_value=leftMaxHealthTotal
 	get_node("team2Bar").value=rightHealthTotal
@@ -341,19 +375,25 @@ func _aFeastForCrows():
 		get_node("winButton").visible=true
 		get_node("announcer").visible=false
 		get_node("winButton").text="Player " + str(winner+1) + " emerges victorious! [Return]"
-
+		get_node('rightAbilityButton').visible=false
+		get_node('leftAbilityButton').visible=false
 	elif rightHealthTotal==0:
 		winner=global.challengers.find(true)
 		get_node("winButton").visible=true
 		get_node("announcer").visible=false
 		get_node("winButton").text="Player " + str(winner+1) + " emerges victorious! [Return]"
-
-func _burial(deadPerson):
+		get_node('rightAbilityButton').visible=false
+		get_node('leftAbilityButton').visible=false
+		
+func _burial(deadPerson,side):
 	deadPerson.get_child(1).set_region_rect(deathRectangles[randi_range(0,4)])
 	deadPerson.z_index=0
 	deadPerson.set_process(false)
 	deadPerson.get_node("healthBar").visible=false
-	fallen.append(deadPerson)
+	if side==0:
+		fallenLeft.append(deadPerson)
+	elif side==1:
+		fallenRight.append(deadPerson)
 
 func _loadCharacters():
 	if global.challengers[0]==true:
@@ -433,7 +473,7 @@ func _loadCharacters():
 		selectedCount+=1
 	
 	for i in countLeft:
-		_anythingAnywhere(i,x,y,false,0)
+		_anythingAnywhere(i,x,y,false,0,false,-1)
 		y+=12*randi_range(2,5)
 		if y>22*12:
 			y=12*5+6
@@ -442,12 +482,12 @@ func _loadCharacters():
 	x=15*45+6
 	y=12*5+6
 	for i in countRight:
-		_anythingAnywhere(i,x,y,true,1)
+		_anythingAnywhere(i,x,y,true,1,false,-1)
 		y+=12*randi_range(2,5)
 		if y>22*12:
 			y=12*5+6
 			x+=12*2
-func _anythingAnywhere(id, x3,y3, flip, side):
+func _anythingAnywhere(id, x3,y3, flip, side,abilityScale,power):
 	var tav
 	if (id==0):
 		tav=preload("res://scenes/characterList/timOBrien.tscn")
@@ -484,6 +524,34 @@ func _anythingAnywhere(id, x3,y3, flip, side):
 		tav=preload("res://scenes/characterList/friend.tscn")
 	var instance=tav.instantiate()
 	instance.global_position=Vector2(x3,y3)
+	var leftHealthBar=preload("res://scenes/tooltips/teamLeftHealthBar.tscn")
+	var rightHealthBar=preload("res://scenes/tooltips/teamRightHealthBar.tscn")
+	var healthBar
+	if side==0:
+		healthBar=leftHealthBar.instantiate()
+	elif side==1:
+		healthBar=rightHealthBar.instantiate()
+	instance.z_index=1
+	instance.add_child(healthBar)
+	instance._setMaxHealth(instance._getMaxHealth()+(2*instance._getMaxHealth()/(instance._getCount())))
+	instance._setHealth(instance._getMaxHealth())
+	if abilityScale==true:
+		instance.get_node("Sprite2D").scale=Vector2(2,2)
+		instance.get_node("CollisionShape2D").scale=Vector2(2,2)
+		instance.get_node("TextureButton").scale=Vector2(2,2)
+		instance.get_node("TextureButton").position=Vector2(-12,-12)
+		instance.get_node("healthBar").scale=Vector2(2,1)
+		instance.get_node("healthBar").position=Vector2(-12,-15)
+		if id==11:
+			instance._setMaxHealth(instance._getMaxHealth()*float(1.2+float(power/10.0)))
+			instance._setHealth(instance._getMaxHealth())
+			instance._setSpeed(instance._getSpeed()+power)
+			instance._setName("[color=pink]Great Potbellied Boar[/color]")
+		elif id==8:
+			instance._setMaxHealth(instance._getMaxHealth()*float(1.2+1.2*float(power/10.0)))
+			instance._setHealth(instance._getMaxHealth())
+			instance._setSpeed(instance._getSpeed()+power)
+			instance._setName("[color=darkorange]Hobgobbo Elite[/color]")
 	add_child(instance)
 	if (flip==true):
 		instance.get_node("Sprite2D").flip_h=!instance.get_node("Sprite2D").flip_h
@@ -500,21 +568,9 @@ func _on_tuturu() -> void:
 	Engine.time_scale=1.0
 	var maxLeftHealth=0
 	var maxRightHealth=0
-	var leftHealthBar=preload("res://scenes/tooltips/teamLeftHealthBar.tscn")
-	var rightHealthBar=preload("res://scenes/tooltips/teamRightHealthBar.tscn")
 	for leftCharacter in left:
-		leftCharacter.z_index=1
-		var healthBar=leftHealthBar.instantiate()
-		leftCharacter.add_child(healthBar)
-		leftCharacter._setMaxHealth(leftCharacter._getMaxHealth()+(2*leftCharacter._getMaxHealth()/(leftCharacter._getCount())))
-		leftCharacter._setHealth(leftCharacter._getMaxHealth())
 		maxLeftHealth+=leftCharacter._getMaxHealth()
 	for rightCharacter in right:
-		rightCharacter.z_index=1
-		var healthBar=rightHealthBar.instantiate()
-		rightCharacter.add_child(healthBar)
-		rightCharacter._setMaxHealth(rightCharacter._getMaxHealth()+(2*rightCharacter._getMaxHealth()/(rightCharacter._getCount())))
-		rightCharacter._setHealth(rightCharacter._getMaxHealth())
 		maxRightHealth+=rightCharacter._getMaxHealth() 
 	get_node("team1Bar").max_value=maxLeftHealth
 	get_node("team1Bar").value=maxLeftHealth
@@ -546,3 +602,124 @@ func _causalInterference(): #this is where I rig the dice
 					var percentage=character._getHealth()/character._getMaxHealth()
 			interferenceCount+=1
 	
+func _musicOfDragons():
+	leftAbility=abilityList.pick_random()
+	abilityList.remove_at(abilityList.find(leftAbility))
+	rightAbility=abilityList.pick_random()
+	
+	var abilityTexts=["[color=Lawngreen]Hire Hobgobbos[/color]", "[color=pink]Corral Greatboars[/color]","[color=orangered]Prescribed Burn[/color]","[color=firebrick]Adrenaline[/color]","[color=gold]Foxhole Prayer[/color]"]
+	get_node("leftAbilityButton/richTextLabel").text=abilityTexts[leftAbility]
+	get_node("rightAbilityButton/richTextLabel").text=abilityTexts[rightAbility]
+
+func _zoltraak(abilityID,charge,side):
+	var flipOrNo
+	if abilityID==1 or abilityID==0:
+		if abilityID==1:
+			emit_signal("pigs")
+		else:
+			emit_signal("gobbo")
+		var unitID=[8,11][abilityID]
+		var times=[3,5][abilityID]
+		y=12*5+6
+		if side==0:
+			x=-12*6+6
+			flipOrNo=false
+		elif side==1:
+			x=15*45+6
+			flipOrNo=true
+		for i in range(times):
+			_anythingAnywhere(unitID,x,y,flipOrNo,side,true,charge)
+			y+=12*randi_range(2,5)
+			if y>22*12:
+				y=12*5+6
+				x+=12*2
+	elif abilityID==2:
+		emit_signal("fire")
+		var allies=left
+		if side==1:
+			allies=right
+			rightFire=true
+		else:
+			leftFire=true
+		for ally in allies:
+			if ally._getPhysAtk()>0:
+				ally._setPhysAtk(ally._getPhysAtk()+charge)
+			else:
+				ally._setMagAtk(ally._getMagAtk()+charge)
+		
+	elif abilityID==3:
+		var enemyList
+		if side==0:
+			enemyList=right
+		else:
+			enemyList=left
+		for enemy in enemyList:
+			enemy._setSpeed(enemy._getSpeed()-charge)
+			enemy.speedForce=0.3
+		emit_signal("adrenaline")
+	elif abilityID==4:
+		var allyList
+		var tav
+		if side==0:
+			allyList=left
+			tav=preload("res://scenes/characterList/blueCross.tscn")
+		elif side==1:
+			allyList=right
+			tav=preload("res://scenes/characterList/redCross.tscn")
+		for ally in allyList:
+			ally._setMaxHealth(ally._getMaxHealth()*(1.1+float(charge/40.0)))
+			ally._setHealth(ally._getHealth()+ally._getMaxHealth()*float(0.2+charge/35.0))
+			if ally._getHealth()>ally._getMaxHealth():
+				ally._setHealth(ally._getMaxHealth())
+			var instance=tav.instantiate()
+			instance.position=ally.position+Vector2(0,-200)
+			instance.speedForce=10
+			add_child(instance)
+			instance._wanDance(ally.position)
+		emit_signal("prayer")
+		
+func _on_left_ability_button_pressed() -> void:
+	_zoltraak(leftAbility,leftAbilityCharge,0)
+	leftAbilityCharge=1000
+	get_node("leftAbilityButton").visible=false
+
+
+func _on_right_ability_button_pressed() -> void:
+	_zoltraak(rightAbility,rightAbilityCharge,1)
+	rightAbilityCharge=1000
+	get_node("rightAbilityButton").visible=false
+
+
+func _on_fire() -> void:
+	queueIndex=0
+	get_node("announcer").visible_characters=0
+	get_node("announcer").text="[color=orangeRed]'Let the night come alive with the music of dragons'[/color]  \n\n "
+	
+
+
+func _on_pigs() -> void:
+	queueIndex=0
+	get_node("announcer").visible_characters=0
+	get_node("announcer").text="[color=pink]'Beasts of every land and clime, / Hearken to my joyful tidings / Of the golden future time.'[/color]\n\n   "
+
+
+func _on_adrenaline() -> void:
+	queueIndex=0
+	get_node("announcer").visible_characters=0
+	get_node("announcer").text="[color=firebrick]'Time is passing so quickly. Right now, I feel like complaining to Einstein.'[/color]\n\n   "
+
+
+func _on_prayer() -> void:
+	queueIndex=0
+	get_node("announcer").visible_characters=0
+	get_node("announcer").text="[color=gold]'I would only believe in a god who could dance.'[/color]\n\n   "
+
+
+func _on_gobbo() -> void:
+	queueIndex=0
+	get_node("announcer").visible_characters=0
+	get_node("announcer").text="[color=lawngreen]'They make no beautiful things, but they make many clever ones.'[/color]\n\n   "
+
+
+func _on_backbutton_pressed() -> void:
+	get_tree().change_scene_to_file("res://scenes/preBattleMenu/preBattleMenu.tscn")

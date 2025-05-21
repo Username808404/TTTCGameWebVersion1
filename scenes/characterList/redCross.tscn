@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://btyxxy7i7bftx"]
+
+[ext_resource type="Script" uid="uid://bylkrcf8giym" path="res://scenes/characterList/bullet.gd" id="1_ach88"]
+[ext_resource type="Texture2D" uid="uid://pbo6hvytsh7" path="res://scenes/redCross.png" id="2_ach88"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ypp78"]
+size = Vector2(12, 6)
+
+[node name="bullet" type="CharacterBody2D"]
+z_index = 10
+script = ExtResource("1_ach88")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ypp78")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-5.68434e-14, 3.55271e-15)
+texture = ExtResource("2_ach88")
+region_enabled = true
+region_rect = Rect2(0, 0, 12, 12)

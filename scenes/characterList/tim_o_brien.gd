@@ -11,7 +11,7 @@ func _wanDance(additiveVector):
 
 func _process(delta: float) -> void:
 	if (self.position!=end):
-		self.position=self.position.move_toward(end,delta*75)
+		self.position=self.position.move_toward(end,delta*75*speedForce)
 
 
 var maxHealth =200*20
@@ -22,6 +22,7 @@ var charName="[color=Aqua]Tim O' Brien[/color]"
 
 var dodge = 25 # +50 with the cowardice of conformity 
 var speed = 50
+var speedForce=1
 
 var defense = 50
 var willpower= 10

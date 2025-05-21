@@ -2,7 +2,7 @@ extends Node2D
 
 var counter=0
 func _process(delta: float) -> void:
-	get_node("Label").visible_characters=counter
+	get_node("Label2").visible_characters=counter
 	counter+=1
 
 

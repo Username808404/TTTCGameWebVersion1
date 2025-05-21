@@ -13,6 +13,7 @@ var willpower= 10
 
 var physAtk = 40 # +25 with hatchet 
 var magAtk = 0
+var speedForce=1
 
 var maxMoveSpeed=4
 var moveSpeed = 4
@@ -32,7 +33,7 @@ func _wanDance(additiveVector):
 
 func _process(delta: float) -> void:
 	if (self.position!=end):
-		self.position=self.position.move_toward(end,delta*75)
+		self.position=self.position.move_toward(end,delta*75*speedForce)
 
 var abilityList=["whirlwind", "prayer"]
 var itemList=[]

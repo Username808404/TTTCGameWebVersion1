@@ -15,10 +15,11 @@ func _wanDance(additiveVector):
 
 func _process(delta: float) -> void:
 	if (self.position!=end):
-		self.position=self.position.move_toward(end,delta*100)
+		self.position=self.position.move_toward(end,delta*100*speedForce)
 
 var dodge = 50 # +10 with jungle spirit
 var speed = 50 # +10 with jungle spirit 
+var speedForce=1
 
 var defense = 50
 var willpower= 10 # +10 with jungle spirit 
