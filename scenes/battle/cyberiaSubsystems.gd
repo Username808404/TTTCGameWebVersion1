@@ -669,8 +669,8 @@ func _zoltraak(abilityID,charge,side):
 			allyList=right
 			tav=preload("res://scenes/characterList/redCross.tscn")
 		for ally in allyList:
-			ally._setMaxHealth(ally._getMaxHealth()*(1.1+float(charge/40.0)))
-			ally._setHealth(ally._getHealth()+ally._getMaxHealth()*float(0.2+charge/35.0))
+			ally._setMaxHealth(ally._getMaxHealth()*(1.2+float(charge/40.0)))
+			ally._setHealth(ally._getHealth()+ally._getMaxHealth()*float(0.3+charge/35.0))
 			if ally._getHealth()>ally._getMaxHealth():
 				ally._setHealth(ally._getMaxHealth())
 			var instance=tav.instantiate()
@@ -695,7 +695,7 @@ func _on_right_ability_button_pressed() -> void:
 func _on_fire() -> void:
 	queueIndex=0
 	get_node("announcer").visible_characters=0
-	get_node("announcer").text="[color=orangeRed]'Let the night come alive with the music of dragons'[/color]  \n\n "
+	get_node("announcer").text="[color=orangeRed]'Let the night come alive with the music of dragons.'[/color]  \n\n "
 	
 
 
